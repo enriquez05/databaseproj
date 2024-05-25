@@ -172,8 +172,8 @@
         } else {
             echo '<script>alert("Error: ' . $deleteQuery . '<br>' . mysqli_error($conn) . '");</script>';
         }
-        header('Location: assignment.php');
-        exit();
+        // header('Location: assignment.php');
+        // exit();
     }
     ?>
     <h2>Assignment Form</h2>

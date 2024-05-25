@@ -181,8 +181,8 @@
         } else {
             echo '<script>alert("Error: ' . $deleteQuery . '<br>' . mysqli_error($conn) . '");</script>';
         }
-        header('Location: department.php');
-        exit();
+        // header('Location: department.php');
+        // exit();
     }
     ?>
     <h2>department Form</h2>

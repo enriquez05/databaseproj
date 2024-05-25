@@ -172,8 +172,8 @@
         } else {
             echo '<script>alert("Error: ' . $deleteQuery . '<br>' . mysqli_error($conn) . '");</script>';
         }
-        header('Location: project.php');
-        exit();
+        // header('Location: project.php');
+        // exit();
     }
     ?>
 

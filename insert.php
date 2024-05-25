@@ -25,7 +25,7 @@ if (isset($_POST['submit_department'])) {
     $ManagerID = mysqli_real_escape_string($conn, $_POST['ManagerID']);
 
     // Insert into database
-    $setQuery = "INSERT INTO department (DepartmentID, DepartmentName, ManagerID) VALUES ('$DepartmentID', '$LastName', '$ManagerID')";
+    $setQuery = "INSERT INTO department (DepartmentID, DepartmentName, ManagerID) VALUES ('$DepartmentID', '$DepartmentName', '$ManagerID')";
     if (mysqli_query($conn, $setQuery)) {
         echo '<script>alert("Department added successfully!");</script>';
         header('Location: department.php');

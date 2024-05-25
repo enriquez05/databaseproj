@@ -173,8 +173,8 @@
             } else {
                 echo '<script>alert("Error: ' . $deleteQuery . '<br>' . mysqli_error($conn) . '");</script>';
             }
-            header('Location: employee.php');
-            exit();
+            // header('Location:employee.php');
+            // exit();
         }
         ?>
 

@@ -185,7 +185,7 @@
         // exit();
     }
     ?>
-    <h2>department Form</h2>
+    <h2>Department Form</h2>
 
     <table>
         <thead>

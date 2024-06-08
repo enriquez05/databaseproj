@@ -253,8 +253,8 @@
                     echo '<td>' . htmlspecialchars($row['LastName']) . '</td>';
                     echo '<td>' . htmlspecialchars($row['FirstName']) . '</td>';
                     echo '<td>' . htmlspecialchars($row['DepartmentID']) . '</td>';
-                    echo '<td><a class="action-link" href="employee.php?deleteid=' . urlencode($row['EmployeeID']) . '">Delete</a></td>';
-                    echo '<td><a class="action-link" onclick="update_form(' . htmlspecialchars(json_encode($row)) . ')">Update</a></td>';
+                    // echo '<td><a class="action-link" href="employee.php?drm(eleteid=' . urlencode($row['EmployeeID']) . '">Delete</a></td>';
+                    echo '<td><a class="action-link" onclick="update_fo' . htmlspecialchars(json_encode($row)) . ')">Update</a></td>';
                     echo '</tr>';
                 }
                 ?>

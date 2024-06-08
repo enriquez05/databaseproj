@@ -230,7 +230,6 @@
                     <th>LastName</th>
                     <th>FirstName</th>
                     <th>DepartmentID</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -253,73 +252,73 @@
                     echo '<td>' . htmlspecialchars($row['LastName']) . '</td>';
                     echo '<td>' . htmlspecialchars($row['FirstName']) . '</td>';
                     echo '<td>' . htmlspecialchars($row['DepartmentID']) . '</td>';
-                    echo '<td><a class="action-link" href="employee.php?deleteid=' . urlencode($row['EmployeeID']) . '">Delete</a></td>';
-                    echo '<td><a class="action-link" onclick="update_form(' . htmlspecialchars(json_encode($row)) . ')">Update</a></td>';
+                    // echo '<td><a class="action-link" href="employee.php?deleteid=' . urlencode($row['EmployeeID']) . '">Delete</a></td>';
+                    // echo '<td><a class="action-link" onclick="update_form(' . htmlspecialchars(json_encode($row)) . ')">Update</a></td>';
                     echo '</tr>';
-                }
-                ?>
-            </tbody>
-        </table>
+                     }
+                     ?>
+             </tbody>
+         </table>
+<!-- 
+    //     <form action="insert.php" method="post">
+    //         <h1>INSERT FORM</h1>
+    //         <label for="e_insert_EmployeeID">Employee ID:</label>
+    //         <input type="text" id="e_insert_EmployeeID" name="e_insert_EmployeeID" required>
+    //         <label for="insert_LastName">Last Name:</label>
+    //         <input type="text" id="insert_LastName" name="insert_LastName" required>
+    //         <label for="insert_FirstName">First Name:</label>
+    //         <input type="text" id="insert_FirstName" name="insert_FirstName" required>
+    //         <label for="e_insert_DepartmentID">Department ID:</label>
+    //         <input type="text" id="e_insert_DepartmentID" name="e_insert_DepartmentID" required>
+    //         <input type="submit" name="submit_employee" value="Submit">
+    //     </form>
+    // </div>
 
-        <form action="insert.php" method="post">
-            <h1>INSERT FORM</h1>
-            <label for="e_insert_EmployeeID">Employee ID:</label>
-            <input type="text" id="e_insert_EmployeeID" name="e_insert_EmployeeID" required>
-            <label for="insert_LastName">Last Name:</label>
-            <input type="text" id="insert_LastName" name="insert_LastName" required>
-            <label for="insert_FirstName">First Name:</label>
-            <input type="text" id="insert_FirstName" name="insert_FirstName" required>
-            <label for="e_insert_DepartmentID">Department ID:</label>
-            <input type="text" id="e_insert_DepartmentID" name="e_insert_DepartmentID" required>
-            <input type="submit" name="submit_employee" value="Submit">
-        </form>
-    </div>
+    // <div id="update_form_modal" class="update-form-modal">
+    //     <form id="EmployeeForm" action="update.php" method="post">
+    //         <span class="close">&times;</span>
+    //         <h1>UPDATE FORM</h1>
+    //         <label for="update_EmployeeID">EmployeeID</label>
+    //         <input type="text" id="update_EmployeeID" name="update_EmployeeID" readonly>
+    //         <label for="update_LastName">LastName</label>
+    //         <input type="text" id="update_LastName" name="update_LastName" required>
+    //         <label for="update_FirstName">FirstName</label>
+    //         <input type="text" id="update_FirstName" name="update_FirstName" required>
+    //         <label for="update_DepartmentID">DepartmentID</label>
+    //         <select id="update_DepartmentID" name="update_DepartmentID" required>
+    //             <?php
+    //             $departmentQuery = "SELECT DepartmentID, DepartmentName FROM department";
+    //             $departmentResult = mysqli_query($conn, $departmentQuery) or die('error fetching departments');
+    //             while ($row = mysqli_fetch_assoc($departmentResult)) {
+    //                 echo '<option value="' . htmlspecialchars($row['DepartmentID']) . '">' . htmlspecialchars($row['DepartmentID']) . ' - ' . htmlspecialchars($row['DepartmentName']) . '</option>';
+    //             }
+    //             ?>
+    //         </select>
+    //         <input type="submit" name="update_employee" value="Submit">
+    //     </form>
+    // </div>
 
-    <div id="update_form_modal" class="update-form-modal">
-        <form id="EmployeeForm" action="update.php" method="post">
-            <span class="close">&times;</span>
-            <h1>UPDATE FORM</h1>
-            <label for="update_EmployeeID">EmployeeID</label>
-            <input type="text" id="update_EmployeeID" name="update_EmployeeID" readonly>
-            <label for="update_LastName">LastName</label>
-            <input type="text" id="update_LastName" name="update_LastName" required>
-            <label for="update_FirstName">FirstName</label>
-            <input type="text" id="update_FirstName" name="update_FirstName" required>
-            <label for="update_DepartmentID">DepartmentID</label>
-            <select id="update_DepartmentID" name="update_DepartmentID" required>
-                <?php
-                $departmentQuery = "SELECT DepartmentID, DepartmentName FROM department";
-                $departmentResult = mysqli_query($conn, $departmentQuery) or die('error fetching departments');
-                while ($row = mysqli_fetch_assoc($departmentResult)) {
-                    echo '<option value="' . htmlspecialchars($row['DepartmentID']) . '">' . htmlspecialchars($row['DepartmentID']) . ' - ' . htmlspecialchars($row['DepartmentName']) . '</option>';
-                }
-                ?>
-            </select>
-            <input type="submit" name="update_employee" value="Submit">
-        </form>
-    </div>
+    // <script>
+    //     function update_form(employee) {
+    //         document.getElementById("update_EmployeeID").value = employee.EmployeeID;
+    //         document.getElementById("update_LastName").value = employee.LastName;
+    //         document.getElementById("update_FirstName").value = employee.FirstName;
+    //         document.getElementById("update_DepartmentID").value = employee.DepartmentID;
+    //         document.getElementById("update_form_modal").style.display = "block";
+    //     }
 
-    <script>
-        function update_form(employee) {
-            document.getElementById("update_EmployeeID").value = employee.EmployeeID;
-            document.getElementById("update_LastName").value = employee.LastName;
-            document.getElementById("update_FirstName").value = employee.FirstName;
-            document.getElementById("update_DepartmentID").value = employee.DepartmentID;
-            document.getElementById("update_form_modal").style.display = "block";
-        }
-
-        window.onload = function () {
-            var span = document.getElementsByClassName("close")[0];
-            span.onclick = function () {
-                document.getElementById("update_form_modal").style.display = "none";
-            }
-            window.onclick = function (event) {
-                if (event.target == document.getElementById("update_form_modal")) {
-                    document.getElementById("update_form_modal").style.display = "none";
-                }
-            }
-        }
-    </script>
+    //     window.onload = function () {
+    //         var span = document.getElementsByClassName("close")[0];
+    //         span.onclick = function () {
+    //             document.getElementById("update_form_modal").style.display = "none";
+    //         }
+    //         window.onclick = function (event) {
+    //             if (event.target == document.getElementById("update_form_modal")) {
+    //                 document.getElementById("update_form_modal").style.display = "none";
+    //             }
+    //         }
+    //     }
+    // </script> -->
 </body>
 
 </html>

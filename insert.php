@@ -1,17 +1,18 @@
 <?php
 include('config/db.php');
 
+// INSERT FUNCTIONS
 if (isset($_POST['submit_employee'])) {
     // Validate and sanitize the input data
-    $EmployeeID = mysqli_real_escape_string($conn, $_POST['EmployeeID']);
-    $LastName = mysqli_real_escape_string($conn, $_POST['LastName']);
-    $FirstName = mysqli_real_escape_string($conn, $_POST['FirstName']);
-    $DepartmentID = mysqli_real_escape_string($conn, $_POST['DepartmentID']);
+    $EmployeeID = mysqli_real_escape_string($conn, $_POST['e_insert_EmployeeID']);
+    $LastName = mysqli_real_escape_string($conn, $_POST['insert_LastName']);
+    $FirstName = mysqli_real_escape_string($conn, $_POST['insert_FirstName']);
+    $DepartmentID = mysqli_real_escape_string($conn, $_POST['e_insert_DepartmentID']);
 
     // Insert into database
     $setQuery = "INSERT INTO employee (EmployeeID, LastName, FirstName, DepartmentID) VALUES ('$EmployeeID', '$LastName', '$FirstName', '$DepartmentID')";
     if (mysqli_query($conn, $setQuery)) {
-        echo '<script>alert("Employee added successfully!");</script>';
+        echo '<script>alert("employee added successfully!");</script>';
         header('Location: employee.php');
         exit();
     } else {
@@ -20,9 +21,9 @@ if (isset($_POST['submit_employee'])) {
 }
 if (isset($_POST['submit_department'])) {
     // Validate and sanitize the input data
-    $DepartmentID = mysqli_real_escape_string($conn, $_POST['DepartmentID']);
-    $DepartmentName = mysqli_real_escape_string($conn, $_POST['DepartmentName']);
-    $ManagerID = mysqli_real_escape_string($conn, $_POST['ManagerID']);
+    $DepartmentID = mysqli_real_escape_string($conn, $_POST['d_insert_DepartmentID']);
+    $DepartmentName = mysqli_real_escape_string($conn, $_POST['d_insert_DepartmentName']);
+    $ManagerID = mysqli_real_escape_string($conn, $_POST['d_insert_ManagerID']);
 
     // Insert into database
     $setQuery = "INSERT INTO department (DepartmentID, DepartmentName, ManagerID) VALUES ('$DepartmentID', '$DepartmentName', '$ManagerID')";

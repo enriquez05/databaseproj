@@ -6,26 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Management</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-
 <body>
     <div class="container">
         <header>
-            <div class="logo">SME</div>
+            <div class="logo"><i class="fas fa-building"></i> SME</div>
             <nav>
                 <ul>
-                    <li><a href="employee_dashboard.php">Employee Dashboard</a></li>
-                    <li><a href="e_emp.php">Employees</a></li>
-                    <li><a href="e_dept.php">Department</a></li>
-                    <li><a href="e_ass.php">Assignment</a></li>
-                    <li><a href="e_proj.php">Project</a></li>
+                    <li><a href="employee_dashboard.php"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</a></li>
+                    <li><a href="e_emp.php"><i class="fas fa-user"></i> Employees</a></li>
+                    <li><a href="e_dept.php"><i class="fas fa-sitemap"></i> Department</a></li>
+                    <li><a href="e_ass.php"><i class="fas fa-tasks"></i> Assignment</a></li>
+                    <li><a href="e_proj.php"><i class="fas fa-project-diagram"></i> Project</a></li>
                 </ul>
             </nav>
             <div class="profile-pic">
-                <button id="logout_btn">LOGOUT</button>
+                <button id="logout_btn"><i class="fas fa-sign-out-alt"></i> LOGOUT</button>
             </div>
         </header>
-
         <main>
 
         <h2>Project Form</h2>

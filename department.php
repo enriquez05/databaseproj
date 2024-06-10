@@ -4,29 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>department Management</title>
+    <title>Department Management</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
-
 <body>
     <div class="container">
         <header>
-            <div class="logo">SME</div>
+            <div class="logo"><i class="fas fa-building"></i> SME</div>
             <nav>
                 <ul>
-                    <li><a href="admin_dashboard.php">Dashboard</a></li>
-                    <li><a href="employee.php">Employee</a></li>
-                    <li><a href="department.php">Department</a></li>
-                    <li><a href="assignment.php">Assignment</a></li>
-                    <li><a href="project.php">Project</a></li>
+                    <li><a href="admin_dashboard.php"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</a></li>
+                    <li><a href="employee.php"><i class="fas fa-user"></i> Employees</a></li>
+                    <li><a href="department.php"><i class="fas fa-sitemap"></i> Department</a></li>
+                    <li><a href="assignment.php"><i class="fas fa-tasks"></i> Assignment</a></li>
+                    <li><a href="project.php"><i class="fas fa-project-diagram"></i> Project</a></li>
                 </ul>
             </nav>
             <div class="profile-pic">
-                <button id="logout_btn">LOGOUT</button>
+                <button id="logout_btn"><i class="fas fa-sign-out-alt"></i> LOGOUT</button>
             </div>
         </header>
-
         <main>
+
+        <script>
+            // Logout functionality
+            document.getElementById('logout_btn').addEventListener("click", function() {
+                window.location.href = 'guest_dashboard.php';
+            });
+
+            // Function to show alerts
+            function showAlert(message, type) {
+                const alertBox = document.createElement('div');
+                alertBox.className = `alert ${type}`;
+                alertBox.innerHTML = `<span class="closebtn">&times;</span>${message}`;
+                document.body.appendChild(alertBox);
+
+                // Close button functionality
+                alertBox.querySelector('.closebtn').addEventListener('click', () => {
+                    alertBox.remove();
+                });
+
+                // Auto-remove alert after 3 seconds
+                setTimeout(() => {
+                    alertBox.remove();
+                }, 3000);
+            }
+        </script>
 
         <h2>Department Form</h2>
 
@@ -46,12 +70,9 @@
                     $id = mysqli_real_escape_string($conn, $_GET['deleteid']);
                     $deleteQuery = "DELETE FROM department WHERE DepartmentID = '$id'";
                     if (mysqli_query($conn, $deleteQuery)) {
-                        echo '<script>alert("department deleted successfully!");</script>';
+                        echo '<script>showAlert("Department deleted successfully!", "success");</script>';
                     } else {
-                        echo '<div class="error-message">';
-                        echo '<p>Error: ' . htmlspecialchars(mysqli_error($conn)) . '</p>';
-                        echo '<button onclick="window.location.href=\'department.php\';">Go Back</button>';
-                        echo '</div>';
+                        echo '<script>showAlert("Error: ' . htmlspecialchars(mysqli_error($conn)) . '", "error");</script>';
                     }
                 }
                 $departmentQuery = "SELECT * FROM department";
@@ -74,19 +95,16 @@
                     $insertQuery = "INSERT INTO department (DepartmentID, DepartmentName, ManagerID) VALUES ('$DepartmentID', '$DepartmentName', '$ManagerID')";
                     
                     if (mysqli_query($conn, $insertQuery)) {
-                        echo '<script>alert("department inserted successfully!");</script>';
+                        echo '<script>showAlert("Department inserted successfully!", "success");</script>';
                     } else {
-                        echo '<div class="error-message">';
-                        echo '<p>Error: ' . htmlspecialchars(mysqli_error($conn)) . '</p>';
-                        echo '<button onclick="window.location.href=\'department.php\';">Go Back</button>';
-                        echo '</div>';
+                        echo '<script>showAlert("Error: ' . htmlspecialchars(mysqli_error($conn)) . '", "error");</script>';
                     }
                 }
                 ?>
             </tbody>
         </table>
 
-        <button id="openInsertFormBtn">Insert New department</button>
+        <button id="openInsertFormBtn">Insert New Department</button>
 
         <div id="insert_form_modal" class="insert-form-modal">
             <form action="department.php" method="post">
@@ -123,9 +141,8 @@
                 <input type="submit" name="update_department" value="Submit">
             </form>
         </div>
-    </div>
     </main>
-
+    
     <script>
         function update_form(department) {
             console.log("department: ", department);
@@ -164,5 +181,4 @@
         }
     </script>
 </body>
-
 </html>

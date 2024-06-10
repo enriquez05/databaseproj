@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo">SME</div>
+            <div class="logo"><i class="fas fa-building"></i> SME</div>     
             <nav>
                  <ul>
                     <li><a href="employee_dashboard.php">Employee Dashboard</a></li>

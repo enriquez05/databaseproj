@@ -8,16 +8,38 @@ if (isset($_POST['submit_employee'])) {
     $LastName = mysqli_real_escape_string($conn, $_POST['insert_LastName']);
     $FirstName = mysqli_real_escape_string($conn, $_POST['insert_FirstName']);
     $DepartmentID = mysqli_real_escape_string($conn, $_POST['e_insert_DepartmentID']);
+    $username_e = mysqli_real_escape_string($conn, $_POST['e_insert_username']);
+    $password_e = mysqli_real_escape_string($conn, $_POST['e_insert_password']);
 
     // Insert into database
-    $setQuery = "INSERT INTO employee (EmployeeID, LastName, FirstName, DepartmentID) VALUES ('$EmployeeID', '$LastName', '$FirstName', '$DepartmentID')";
-    if (mysqli_query($conn, $setQuery)) {
-        echo '<script>alert("employee added successfully!");</script>';
-        header('Location: employee.php');
-        exit();
+    $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+    $stmt1 = $conn->prepare($sql);
+    $stmt1->bind_param("ss", $username_e, $password_e);
+
+    // Execute the first query
+    if ($stmt1->execute()) {
+        // Execute the second query
+        $user_id = $stmt1->insert_id;
+        $stmt1->close();
+
+        $sql = "INSERT INTO employee (EmployeeID, LastName, FirstName, DepartmentID, user_id) VALUES (?, ?, ?, ?, ?)";
+        $stmt2 = $conn->prepare($sql);
+        $stmt2->bind_param("ssssi", $EmployeeID, $LastName, $FirstName, $DepartmentID, $user_id);
+
+        if ($stmt2->execute()) {
+            echo '<script>alert("Employee added successfully!");</script>';
+            header('Location: employee.php');
+            exit();
+        } else {
+            echo '<script>alert("Error: ' . $stmt2->error . '");</script>';
+        }
     } else {
-        echo '<script>alert("Error: ' . $setQuery . '<br>' . mysqli_error($conn) . '");</script>';
+        echo '<script>alert("Error: ' . $stmt1->error . '");</script>';
     }
+
+    // Close the statements
+    
+    $stmt2->close();
 }
 if (isset($_POST['submit_department'])) {
     // Validate and sanitize the input data

@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="d-styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">  
+
 </head>
 <body>
     <div class="container">
@@ -12,32 +15,17 @@
             <div class="logo">SME</div>
             <nav>
                 <ul>
-                    <li><a href="#">Guest Dashboard</a></li>
+                    <li><a href="#"><i class="fas fa-tachometer-alt"></i> Guest Dashboard</a></li>
                 </ul>
             </nav>
             <div class="profile-pic">
-                <button onclick="document.getElementById('loginModal').style.display='block'">Login</button>
-
-                <div id="loginModal" class="modal">
-                    <div class="modal-content" method="post">
-                        <span class="close" onclick="document.getElementById('loginModal').style.display='none'">&times;</span>
-                        <form id="login_form" class="login-form">
-                            <label for="uname"><b>Username</b></label>
-                            <input type="text" placeholder="Enter Username" name="uname" required>
-
-                            <label for="psw"><b>Password</b></label>
-                            <input type="password" placeholder="Enter Password" name="psw" required>
-
-                            <button type="submit" name="login_user">Login</button>
-                        </form>
-                    </div>
-                </div>
+                <button id="login_btn"><i class="fas fa-sign-IN-alt"></i> LOGIN</button>
             </div>
         </header>
         <main>
             <section class="overview">
                 <div class="client-overview">
-                    <div class="title">Department Overview</div>
+                    <div class="title"><i class="fas fa-chart-bar"></i> Department Overview</div>
                     <div class="chart">
                         <canvas id="departmentChart"></canvas>
                     </div>
@@ -45,11 +33,11 @@
                 <div class="summary">
                     <div class="total-employees">
                         <div id="employee_tnum" class="number"></div>
-                        <div class="label">Employees</div>
+                        <div class="label"><i class="fas fa-user-friends"></i> Employees</div>
                     </div>
                     <div class="total-department">
                         <div id="department_tnum" class="number"></div>
-                        <div class="label">Departments</div>
+                        <div class="label"><i class="fas fa-building"></i> Departments</div>
                     </div>
                 </div>
             </section>
@@ -57,15 +45,15 @@
                 <div class="summary">
                     <div class="total-assignment">
                         <div id="assignment_tnum" class="number"></div>
-                        <div class="label">Assignments</div>
+                        <div class="label"><i class="fas fa-tasks"></i> Assignments</div>
                     </div>
                     <div class="total-project">
                         <div id="project_tnum" class="number"></div>
-                        <div class="label">Projects</div>
+                        <div class="label"><i class="fas fa-project-diagram"></i> Projects</div>
                     </div>
                 </div>
                 <div class="project-map">
-                    <div class="title">Project Overview</div>
+                    <div class="title"><i class="fas fa-map"></i> Project Overview</div>
                     <div class="chart">
                         <canvas id="projectChart"></canvas>
                     </div>
@@ -73,7 +61,7 @@
             </section>
             <section class="employee-list"> 
                 <div class="list">
-                <div class="title">Top Employee List</div>
+                    <div class="title"><i class="fas fa-list"></i> Top Employee List</div>
                     <div class="employee title-row">
                         <div class="employee-id">Employee ID</div>
                         <div class="employee-name">First Name</div>
@@ -85,7 +73,7 @@
                     </div>
                     <div class="employee">
                         <div id="topA_EmployeeID" class="employee-id"></div>
-                        <div id="topA_FirstName"  class="employee-name"></div>
+                        <div id="topA_FirstName" class="employee-name"></div>
                         <div id="topA_LastName" class="employee-name"></div>
                         <div id="topA_DepartmentID" class="department"></div>
                         <div id="topA_ProjectID" class="department"></div>
@@ -94,7 +82,7 @@
                     </div>
                     <div class="employee">
                         <div id="topB_EmployeeID" class="employee-id"></div>
-                        <div id="topB_FirstName"  class="employee-name"></div>
+                        <div id="topB_FirstName" class="employee-name"></div>
                         <div id="topB_LastName" class="employee-name"></div>
                         <div id="topB_DepartmentID" class="department"></div>
                         <div id="topB_ProjectID" class="department"></div>
@@ -103,109 +91,91 @@
                     </div>
                     <div class="employee">
                         <div id="topC_EmployeeID" class="employee-id"></div>
-                        <div id="topC_FirstName"  class="employee-name"></div>
+                        <div id="topC_FirstName" class="employee-name"></div>
                         <div id="topC_LastName" class="employee-name"></div>
                         <div id="topC_DepartmentID" class="department"></div>
                         <div id="topC_ProjectID" class="department"></div>
                         <div id="topC_AssignmentID" class="department"></div>
                         <div id="topC_HoursWorked" class="department"></div>
                     </div>
-                    
                 </div>
             </section>
         </main>
     </div>
 
+    <!-- Modal for Login -->
+    <div id="loginModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex justify-center items-center hidden">
+        <div class="bg-white p-8 rounded shadow-lg shadow-shadow w-96 relative">
+            <button id="closeModal" class="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
+                &times;
+            </button>
+            <h2 class="text-2xl font-bold mb-4 text-center">Login</h2>
+            <form id="loginForm" method="post">
+                <div class="mb-4">
+                    <label for="uname" class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="uname" name="uname" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="psw" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <input type="password" id="psw" name="psw" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="flex items-center justify-center">
+                    <button type="submit" id="login_btn_submit" name="submit-login" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <?php
     include('config/db.php');
-    // Query to get the total number of employees
-    $query = "SELECT COUNT(*) AS total_employees FROM employee";
-    $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($result);
-    $total_employees = json_encode($row['total_employees']);
 
-    // Query to get the total number of department
-    $query = "SELECT COUNT(*) AS total_department FROM department";
-    $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($result);
-    $total_department = json_encode($row['total_department']);
+    // Queries for fetching data
+    $queries = [
+        "total_employees" => "SELECT COUNT(*) AS total_employees FROM employee",
+        "total_department" => "SELECT COUNT(*) AS total_department FROM department",
+        "total_assignment" => "SELECT COUNT(*) AS total_assignment FROM assignment",
+        "total_project" => "SELECT COUNT(*) AS total_project FROM project",
+        "departments_chart" => "SELECT DepartmentName, COUNT(*) AS count FROM department GROUP BY DepartmentName",
+        "project_chart" => "SELECT ProjectName, COUNT(*) AS count FROM project GROUP BY ProjectName",
+        "top_employees" => "
+            SELECT 
+                a.AssignmentID, 
+                a.EmployeeID, 
+                a.ProjectID, 
+                a.HoursWorked, 
+                e.FirstName, 
+                e.LastName, 
+                e.DepartmentID 
+            FROM 
+                assignment a 
+            JOIN 
+                employee e 
+            ON 
+                a.EmployeeID = e.EmployeeID 
+            ORDER BY 
+                a.HoursWorked DESC 
+            LIMIT 3"
+    ];
 
-    // Query to get the total number of assignment
-    $query = "SELECT COUNT(*) AS total_assignment FROM assignment";
-    $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($result);
-    $total_assignment = json_encode($row['total_assignment']);
-
-    // Query to get the total number of project
-    $query = "SELECT COUNT(*) AS total_project FROM project";
-    $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($result);
-    $total_project = json_encode($row['total_project']);
-
-    // Query to get the count of each department name
-    $query = "SELECT DepartmentName, COUNT(*) AS count FROM department GROUP BY DepartmentName";
-    $result = mysqli_query($conn, $query);
-
-    $departments_chart = [];
-    $counts_dept_chart = [];
-
-    while ($row = mysqli_fetch_assoc($result)) {
-        $departments_chart[] = $row['DepartmentName'];
-        $counts_dept_chart[] = $row['count'];
+    foreach ($queries as $key => $query) {
+        $result = mysqli_query($conn, $query);
+        if ($key === "departments_chart" || $key === "project_chart" || $key === "top_employees") {
+            ${$key} = [];
+            while ($row = mysqli_fetch_assoc($result)) {
+                ${$key}[] = $row;
+            }
+        } else {
+            $row = mysqli_fetch_assoc($result);
+            ${$key} = json_encode($row[array_key_first($row)]);
+        }
     }
-
-    // Query to get the count of each project name
-    $query = "SELECT ProjectName, COUNT(*) AS count FROM project GROUP BY ProjectName";
-    $result = mysqli_query($conn, $query);
-
-    $project_chart = [];
-    $counts_proj_chart = [];
-
-    while ($row = mysqli_fetch_assoc($result)) {
-        $project_chart[] = $row['ProjectName'];
-        $counts_proj_chart[] = $row['count'];
-    }
-
-    // Query to get the top 3 highest worked hours with employee details
-    $query = "
-        SELECT 
-            a.AssignmentID, 
-            a.EmployeeID, 
-            a.ProjectID, 
-            a.HoursWorked, 
-            e.FirstName, 
-            e.LastName, 
-            e.DepartmentID 
-        FROM 
-            assignment a 
-        JOIN 
-            employee e 
-        ON 
-            a.EmployeeID = e.EmployeeID 
-        ORDER BY 
-            a.HoursWorked DESC 
-        LIMIT 3
-    ";
-
-    $result = mysqli_query($conn, $query);
-
-    $topAssignmentsWithEmployeeDetails = [];
-
-    while ($row = mysqli_fetch_assoc($result)) {
-        $topAssignmentsWithEmployeeDetails[] = $row;
-    }
-
-    
     ?>
-
     <script>
+        // Assigning PHP values to JavaScript variables
         var total_employee_num = <?php echo $total_employees; ?>;
         var total_department_num = <?php echo $total_department; ?>;
         var total_assignment_num = <?php echo $total_assignment; ?>;
@@ -216,13 +186,11 @@
         document.getElementById("assignment_tnum").textContent = total_assignment_num;
         document.getElementById("project_tnum").textContent = total_project_num;
 
-        // Department overview
-        // Prepare data for Chart.js
+        // Department overview chart
         var ctxDepartment = document.getElementById('departmentChart').getContext('2d');
-        var departmentNames = <?php echo json_encode($departments_chart); ?>;
-        var departmentCounts = <?php echo json_encode($counts_dept_chart); ?>;
-        
-        // Create the bar chart
+        var departmentNames = <?php echo json_encode(array_column($departments_chart, 'DepartmentName')); ?>;
+        var departmentCounts = <?php echo json_encode(array_column($departments_chart, 'count')); ?>;
+
         var departmentChart = new Chart(ctxDepartment, {
             type: 'bar',
             data: {
@@ -230,22 +198,8 @@
                 datasets: [{
                     label: '# of Departments',
                     data: departmentCounts,
-                    backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
                 }]
             },
@@ -265,13 +219,11 @@
             }
         });
 
-        // Project overview
-        // Prepare data for Chart.js
+        // Project overview chart
         var ctxProject = document.getElementById('projectChart').getContext('2d');
-        var projectNames = <?php echo json_encode($project_chart); ?>;
-        var projectCounts = <?php echo json_encode($counts_proj_chart); ?>;
-        
-        // Create the pie chart
+        var projectNames = <?php echo json_encode(array_column($project_chart, 'ProjectName')); ?>;
+        var projectCounts = <?php echo json_encode(array_column($project_chart, 'count')); ?>;
+
         var projectChart = new Chart(ctxProject, {
             type: 'line',
             data: {
@@ -279,22 +231,8 @@
                 datasets: [{
                     label: '# of Projects',
                     data: projectCounts,
-                    backgroundColor: [
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
                     borderWidth: 1
                 }]
             },
@@ -309,54 +247,50 @@
             }
         });
 
-
-        // top 3 employee
-        const top_employees = <?php echo json_encode($topAssignmentsWithEmployeeDetails); ?>;
+        // Top 3 employees
+        const top_employees = <?php echo json_encode($top_employees); ?>;
         const topA_employee = top_employees[0];
         const topB_employee = top_employees[1];
         const topC_employee = top_employees[2];
 
-        // TOP1
-        document.getElementById("topA_EmployeeID").textContent = topA_employee['EmployeeID'];
-        document.getElementById("topA_FirstName").textContent = topA_employee['FirstName'];
-        document.getElementById("topA_LastName").textContent = topA_employee['LastName'];
-        document.getElementById("topA_DepartmentID").textContent = topA_employee['DepartmentID'];
-        document.getElementById("topA_ProjectID").textContent = topA_employee['ProjectID'];
-        document.getElementById("topA_AssignmentID").textContent = topA_employee['AssignmentID'];
-        document.getElementById("topA_HoursWorked").textContent = topA_employee['HoursWorked'];
+        // Updating DOM with top employee details
+        const setTopEmployeeDetails = (prefix, employee) => {
+            document.getElementById(prefix + "EmployeeID").textContent = employee['EmployeeID'];
+            document.getElementById(prefix + "FirstName").textContent = employee['FirstName'];
+            document.getElementById(prefix + "LastName").textContent = employee['LastName'];
+            document.getElementById(prefix + "DepartmentID").textContent = employee['DepartmentID'];
+            document.getElementById(prefix + "ProjectID").textContent = employee['ProjectID'];
+            document.getElementById(prefix + "AssignmentID").textContent = employee['AssignmentID'];
+            document.getElementById(prefix + "HoursWorked").textContent = employee['HoursWorked'];
+        };
 
+        setTopEmployeeDetails("topA_", topA_employee);
+        setTopEmployeeDetails("topB_", topB_employee);
+        setTopEmployeeDetails("topC_", topC_employee);
 
-        // TOP2
-        document.getElementById("topB_EmployeeID").textContent = topB_employee['EmployeeID'];
-        document.getElementById("topB_FirstName").textContent = topB_employee['FirstName'];
-        document.getElementById("topB_LastName").textContent = topB_employee['LastName'];
-        document.getElementById("topB_DepartmentID").textContent = topB_employee['DepartmentID'];
-        document.getElementById("topB_ProjectID").textContent = topB_employee['ProjectID'];
-        document.getElementById("topB_AssignmentID").textContent = topB_employee['AssignmentID'];
-        document.getElementById("topB_HoursWorked").textContent = topB_employee['HoursWorked'];
-
-        // TOP3
-        document.getElementById("topC_EmployeeID").textContent = topC_employee['EmployeeID'];
-        document.getElementById("topC_FirstName").textContent = topC_employee['FirstName'];
-        document.getElementById("topC_LastName").textContent = topC_employee['LastName'];
-        document.getElementById("topC_DepartmentID").textContent = topC_employee['DepartmentID'];
-        document.getElementById("topC_ProjectID").textContent = topC_employee['ProjectID'];
-        document.getElementById("topC_AssignmentID").textContent = topC_employee['AssignmentID'];
-        document.getElementById("topC_HoursWorked").textContent = topC_employee['HoursWorked'];
-
-
-        // LOGIN
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('loginModal')) {
-                document.getElementById('loginModal').style.display = "none";
-            }
+        // Login functionality
+        document.getElementById("login_btn").addEventListener("click", showLoginModal);
+        function showLoginModal() {
+            loginModal.classList.remove('hidden');
         }
-        document.querySelector('.login-form').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent form submission
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+        function closeModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+        document.getElementById('login_btn_submit').addEventListener("click", function() {
+            event.preventDefault();
+            const form = document.getElementById('loginForm');
+            const formData = new FormData(form);
 
-            var form_login = document.getElementById('login_form');
-            var formData = new FormData(form_login);
-
+            formData.forEach((value, key) => {
+                console.log(key + ": " + value);
+            });
+            
             $.ajax({
                 url: 'login.php',
                 type: 'POST',
@@ -373,15 +307,15 @@
                             title: 'Success',
                             text: msg ,
                         }).then(() => {
-                            switch (user_id) {
-                                case 1:
-                                    window.location.href = 'admin_dashboard.php';
+                            switch(user_id){
+                                case 1: 
+                                    window.location.href = "admin_dashboard.php";
                                     break;
-                                case 2:
-                                    window.location.href = 'manager_dashboard.php';
+                                case 2: 
+                                    window.location.href = "manager_dashboard.php";
                                     break;
-                                default:
-                                    window.location.href = 'employee_dashboard.php';
+                                default: 
+                                    window.location.href = "employee_dashboard.php";
                                     break;
                             }
                         });
@@ -411,8 +345,6 @@
                 }
             });
         });
-
     </script>
-
 </body>
 </html>

@@ -1,0 +1,269 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Body and Container */
+body {
+    background: linear-gradient(135deg, #2E2E2E, #1E1E1E);
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    width: 90%;
+    height: 90%;
+    background-color: #1E1E1E;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    padding: 20px;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #111;
+    border-radius: 10px;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #b5d357;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: #333;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+header nav ul li a:hover {
+    background-color: #b5d357;
+}
+
+header .profile-pic {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+header .profile-pic button {
+    background-color: #6B5B95;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+header .profile-pic button:hover {
+    background-color: #554478;
+}
+
+/* Main Section */
+main {
+    padding: 20px;
+    height: calc(100% - 80px); 
+    overflow-y: auto;
+}
+
+/* Overview, Maps, and Employee List Sections */
+.overview, .maps, .employee-list {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.client-overview, .project-map, .summary, .list {
+    background-color: #333;
+    border-radius: 10px;
+    padding: 20px;
+    flex: 1;
+    color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.summary > div, .employee-list .employee, .employee-list .title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #444;
+}
+
+.summary > div {
+    background-color: #b5d357;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 10px;
+    text-align: center;
+    height: 20vh;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 22px;
+}
+
+.employee-list .title-row {
+    background-color: #b5d357;
+    font-weight: bold;
+    border-bottom: none;
+}
+
+.employee-list .employee {
+    background-color: #444;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.employee-list .employee:hover {
+    background-color: #555;
+}
+
+.employee-list .employee div {
+    text-align: center;
+}
+
+.employee-list .work-performance .bar {
+    height: 10px;
+    background-color: #b5d357;
+    border-radius: 5px;
+    flex: 1;
+}
+
+.employee-list .work-performance .percentage {
+    flex: 0 0 50px;
+    text-align: left;
+}
+
+.chart {
+    height: 100%;
+}
+
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* Modal */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation: animateModal 0.4s;
+}
+
+@keyframes animateModal {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Login Form */
+.login-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: auto;
+}
+
+.login-form input[type=text], .login-form input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.login-form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+    transition: opacity 0.3s;
+}
+
+.login-form button:hover {
+    opacity: 0.8;
+}
+
+/* Error Message */
+.error-message {
+    color: red;
+    background-color: #ffe6e6;
+    border: 1px solid red;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    display: none;
+}

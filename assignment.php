@@ -1,49 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>assignment</title>
+    <title>Assignment Management</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
+    <div class="container">
+        <header>
+            <div class="logo">SME</div>
+            <nav>
+                <ul>
+                    <li><a href="admin_dashboard.php">Dashboard</a></li>
+                    <li><a href="employee.php">Employee</a></li>
+                    <li><a href="department.php">Department</a></li>
+                    <li><a href="assignment.php">Assignment</a></li>
+                    <li><a href="project.php">Project</a></li>
+                </ul>
+            </nav>
+            <div class="profile-pic">
+                <button id="logout_btn">LOGOUT</button>
+            </div>
+        </header>
 
-        <div class="container">
-            <header>
-                <div class="logo">SME</div>
-                <nav>
-                    <ul>
-                        <li><a href="admin_dashboard.php">Dashboard</a></li>
-                        <li><a href="">Employees</a></li>
-                        <li><a href="department.php">Department</a></li>
-                        <li><a href="#">Assignment</a></li>
-                        <li><a href="project.php">Project</a></li>
-                    </ul>
-                </nav>
-                <div class="search-profile">
-                    <div class="profile-pic"></div>
-                </div>
-            </header>
-        <?php
-        require 'config/db.php';
+        <main>
 
-        // Handle deletion
-        if (isset($_GET['deleteid'])) {
-            $id = mysqli_real_escape_string($conn, $_GET['deleteid']);
-            $deleteQuery = "DELETE FROM assignment WHERE AssignmentID = '$id'";
-            if (mysqli_query($conn, $deleteQuery)) {
-                echo '<script>alert("Assignment deleted successfully!");</script>';
-            } else {
-                echo '<script>alert("Error: ' . $deleteQuery . '<br>' . mysqli_error($conn) . '");</script>';
-            }
-            // header('Location:assignment.php');
-            // exit();
-        }
-        ?>
-
-        <h2>assignment Form</h2>
+        <h2>Assignment Form</h2>
 
         <table>
             <thead>
@@ -52,107 +37,104 @@
                     <th>EmployeeID</th>
                     <th>ProjectID</th>
                     <th>HoursWorked</th>
-                    <th>Action</th>
+                    <th colspan="2">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
+                require 'config/db.php';
+                if (isset($_GET['deleteid'])) {
+                    $id = mysqli_real_escape_string($conn, $_GET['deleteid']);
+                    $deleteQuery = "DELETE FROM assignment WHERE AssignmentID = '$id'";
+                    if (mysqli_query($conn, $deleteQuery)) {
+                        echo '<script>alert("assignment deleted successfully!");</script>';
+                    } else {
+                        echo '<div class="error-message">';
+                        echo '<p>Error: ' . htmlspecialchars(mysqli_error($conn)) . '</p>';
+                        echo '<button onclick="window.location.href=\'assignment.php\';">Go Back</button>';
+                        echo '</div>';
+                    }
+                }
                 $assignmentQuery = "SELECT * FROM assignment";
                 $result = mysqli_query($conn, $assignmentQuery) or die('error');
-
                 while ($row = mysqli_fetch_array($result)) {
                     echo '<tr>';
                     echo '<td>' . htmlspecialchars($row['AssignmentID']) . '</td>';
                     echo '<td>' . htmlspecialchars($row['EmployeeID']) . '</td>';
                     echo '<td>' . htmlspecialchars($row['ProjectID']) . '</td>';
                     echo '<td>' . htmlspecialchars($row['HoursWorked']) . '</td>';
-                    echo '<td><a class="action-link" href="assignment.php?deleteid=' . urlencode($row['AssignmentID']) . '">Delete</a></td>';
-                    // echo '<td><a class="action-link" href="assignment.php?updateid=' . urlencode($row['AssignmentID']) . '">Update</a></td>';
-                    echo '<td><a class="action-link"  onclick="update_form(' . htmlspecialchars(json_encode($row)) . ')">Update</a></td>';
+                    echo '<td><a class="action-link delete" href="assignment.php?deleteid=' . urlencode($row['AssignmentID']) . '">Delete</a></td>';
+                    echo '<td><a class="action-link update" onclick="update_form(' . htmlspecialchars(json_encode($row)) . ')">Update</a></td>';
                     echo '</tr>';
+                }
+
+                if (isset($_POST['submit_assignment'])) {
+                    $AssignmentID = mysqli_real_escape_string($conn, $_POST['e_insert_AssignmentID']);
+                    $EmployeeID = mysqli_real_escape_string($conn, $_POST['insert_EmployeeID']);
+                    $ProjectID = mysqli_real_escape_string($conn, $_POST['insert_ProjectID']);
+                    $HoursWorked = mysqli_real_escape_string($conn, $_POST['e_insert_HoursWorked']);
+                    
+                    $insertQuery = "INSERT INTO assignment (AssignmentID, EmployeeID, ProjectID, HoursWorked) VALUES ('$AssignmentID', '$EmployeeID', '$ProjectID', '$HoursWorked')";
+                    
+                    if (mysqli_query($conn, $insertQuery)) {
+                        echo '<script>alert("assignment inserted successfully!");</script>';
+                    } else {
+                        echo '<div class="error-message">';
+                        echo '<p>Error: ' . htmlspecialchars(mysqli_error($conn)) . '</p>';
+                        echo '<button onclick="window.location.href=\'assignment.php\';">Go Back</button>';
+                        echo '</div>';
+                    }
                 }
                 ?>
             </tbody>
         </table>
 
-        
+        <button id="openInsertFormBtn">Insert New assignment</button>
 
-        
-        <!-- INSERT assignment -->
-        <form action="insert.php" method="post">
-            <h1>INSERT FORM</h1>
-            <label for="AssignmentID">assignment ID:</label>
-            <input type="text" id="AssignmentID" name="AssignmentID" required>
-            <label for="EmployeeID">Employee ID:</label>
-            <input type="text" id="EmployeeID" name="EmployeeID" required>
-            <label for="ProjectID">Project ID:</label>
-            <input type="text" id="ProjectID" name="ProjectID" required>
-            <label for="HoursWorked">Hours Worked:</label>
-            <input type="text" id="HoursWorked" name="HoursWorked" required>
-            <input type="submit" name="submit_assignment" value="Submit">
-        </form>
-        <script>
-            var modal = document.getElementById("myModal");
-            var span = document.getElementsByClassName("close")[0];
+        <div id="insert_form_modal" class="insert-form-modal">
+            <form action="assignment.php" method="post">
+                <span class="close">&times;</span>
+                <h1>INSERT FORM</h1>
+                <label for="e_insert_AssignmentID">assignment ID:</label>
+                <input type="text" id="e_insert_AssignmentID" name="e_insert_AssignmentID" required>
+                <label for="insert_EmployeeID">Last Name:</label>
+                <input type="text" id="insert_EmployeeID" name="insert_EmployeeID" required>
+                <label for="insert_ProjectID">First Name:</label>
+                <input type="text" id="insert_ProjectID" name="insert_ProjectID" required>
+                <label for="e_insert_HoursWorked">Department ID:</label>
+                <input type="text" id="e_insert_HoursWorked" name="e_insert_HoursWorked" required>
+                <input type="submit" name="submit_assignment" value="Submit">
+            </form>
+        </div>
 
-            function editassignment(AssignmentID, LasttName, ProjectID, HoursWorked) {
-                document.getElementById('AssignmentID').value = AssignmentID;
-                document.getElementById('EmployeeID').value = EmployeeID;
-                document.getElementById('ProjectID').value = ProjectID;
-                document.getElementById('HoursWorked').value = HoursWorked;
-                modal.style.display = "block";
-            }
-
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-        </script>
+        <div id="update_form_modal" class="update-form-modal">
+            <form id="assignmentForm" action="update.php" method="post">
+                <span class="close">&times;</span>
+                <h1>UPDATE FORM</h1>
+                <label for="update_AssignmentID">AssignmentID</label>
+                <input type="text" id="update_AssignmentID" name="update_AssignmentID" readonly>
+                <label for="update_EmployeeID">EmployeeID</label>
+                <input type="text" id="update_EmployeeID" name="update_EmployeeID" required>
+                <label for="update_ProjectID">ProjectID</label>
+                <input type="text" id="update_ProjectID" name="update_ProjectID" required>
+                <label for="update_HoursWorked">HoursWorked</label>
+                <select id="update_HoursWorked" name="update_HoursWorked" required>
+                    <?php
+                    $departmentQuery = "SELECT AssignmentID, HoursWorked FROM assignment";
+                    $departmentResult = mysqli_query($conn, $departmentQuery) or die('error fetching departments');
+                    while ($row = mysqli_fetch_assoc($departmentResult)) {
+                        echo '<option value="' . htmlspecialchars($row['HoursWorked']) . '">' . htmlspecialchars($row['HoursWorked']) . ' - ' . htmlspecialchars($row['DepartmentName']) . '</option>';
+                    }
+                    ?>
+                </select>
+                <input type="submit" name="update_assignment" value="Submit">
+            </form>
+        </div>
     </div>
+    </main>
 
-    <!-- Modal for Update -->
-    <div id="update_form_modal" class="update-form-modal">
-        <form id="assignmentForm" action="update.php" method="post">
-            <span class="close">&times;</span>
-            <h1>UPDATE FORM</h1> 
-            <label for="update_AssignmentID">AssignmentID</label>
-            <input autocomplete="off" type="text" id="update_AssignmentID" name="update_AssignmentID" readonly style="background-color: rgba(0,0,0,0.2)">
-            <label for="update_EmployeeID">EmployeeID</label>
-            <select id="update_EmployeeID" name="update_EmployeeID" required>
-                <?php
-                // Assuming Department table has HoursWorked and DepartmentName
-                $departmentQuery = "SELECT EmployeeID, LastName FROM employee"; 
-                $departmentResult = mysqli_query($conn, $departmentQuery) or die('error fetching departments');
-                while ($row = mysqli_fetch_assoc($departmentResult)) {
-                    echo '<option value="' . htmlspecialchars($row['EmployeeID']) . '">' . htmlspecialchars($row['EmployeeID']) . ' - ' . htmlspecialchars($row['LastName']) . '</option>';
-                }
-                ?>
-            </select>
-            <label for="update_ProjectID">ProjectID</label>
-            <select id="update_ProjectID" name="update_ProjectID" required>
-                <?php
-                // Assuming Department table has HoursWorked and DepartmentName
-                $departmentQuery = "SELECT ProjectID, ProjectName FROM project"; 
-                $departmentResult = mysqli_query($conn, $departmentQuery) or die('error fetching departments');
-                while ($row = mysqli_fetch_assoc($departmentResult)) {
-                    echo '<option value="' . htmlspecialchars($row['ProjectID']) . '">' . htmlspecialchars($row['ProjectID']) . ' - ' . htmlspecialchars($row['ProjectName']) . '</option>';
-                }
-                ?>
-            </select>
-            <label for="update_HoursWorked">HoursWorked</label>
-            <input autocomplete="off" type="text" id="update_HoursWorked" name="update_HoursWorked" required>
-            <br>
-            <input type="submit" name="update_assignment" value="Submit">
-        </form>
-    </div>
     <script>
         function update_form(assignment) {
-            console.log("assignment: ", assignment);
             document.getElementById("update_AssignmentID").value = assignment.AssignmentID;
             document.getElementById("update_EmployeeID").value = assignment.EmployeeID;
             document.getElementById("update_ProjectID").value = assignment.ProjectID;
@@ -160,22 +142,34 @@
             document.getElementById("update_form_modal").style.display = "block";
         }
 
-        window.onload = function() {
-            var span = document.getElementsByClassName("close")[0];
-
-            span.onclick = function() {
+        window.onload = function () {
+            var spanUpdate = document.getElementsByClassName("close")[0];
+            spanUpdate.onclick = function () {
                 document.getElementById("update_form_modal").style.display = "none";
             }
-
-            window.onclick = function(event) {
+            window.onclick = function (event) {
                 if (event.target == document.getElementById("update_form_modal")) {
                     document.getElementById("update_form_modal").style.display = "none";
                 }
             }
+
+            var insertFormBtn = document.getElementById("openInsertFormBtn");
+            var insertFormModal = document.getElementById("insert_form_modal");
+            var spanInsert = insertFormModal.getElementsByClassName("close")[0];
+
+            insertFormBtn.onclick = function() {
+                insertFormModal.style.display = "block";
+            }
+            spanInsert.onclick = function() {
+                insertFormModal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == insertFormModal) {
+                    insertFormModal.style.display = "none";
+                }
+            }
         }
     </script>
-
-
 </body>
 
 </html>
